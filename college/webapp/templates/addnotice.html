@@ -1,0 +1,111 @@
+{% extends 'basic.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}
+Add Notice
+{% endblock %}
+
+{% block css%}
+<style>
+    .section {
+        min-height: 59vh;
+    }
+
+    .box {
+        background-color: #fff;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        border-radius: 12px;
+    }
+
+    .input {
+        background: transparent;
+        border-color: transparent;
+        border-bottom: 2px solid #ccc;
+        border-radius: 0;
+        transition: all .7s;
+    }
+
+    .input:focus {
+        background: transparent;
+        border-color: transparent;
+        box-shadow: none;
+        color: #000;
+        border-bottom: 2px solid #fd2f0a;
+    }
+
+    .label {
+        color: #575757;
+        display: block;
+        font-size: 16px;
+    }
+
+    .buttons {
+        width: 120px;
+        height: 50px;
+        border: none;
+        font-size: 13px;
+        letter-spacing: 1px;
+        background: #fd2f0a;
+        opacity: .8;
+        transition: all .5s;
+    }
+
+    .btn-danger:hover {
+        transform: translateY(-3px);
+        opacity: 1;
+        width: 135px;
+        background: #fd2f0a;
+    }
+</style>
+{% endblock%}
+
+{% load static %}
+{% block body %}
+<section class="bg-light section p-4">
+    <div class="container-fluid">
+        <h2 class="text-center">Add Notice</h2>
+        <div class="underline m-auto">
+
+        </div>
+
+        <form action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="box p-4 m-5">
+                <div class="row justify-content-center my-2">
+                    <div class="form-group col-11">
+                        {{ form|crispy }}
+                    </div>
+                </div>
+                <div class="text-center my-3">
+                    <button id="submit" type="submit"
+                        class="buttons btn btn-danger text-uppercase text-center text-white font-weight-bold">
+                        Publish</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}
+
+{% block js %}
+<script>
+    $(document).ready(function () {
+        {% if error %}
+        alert("Fields cann't be empty!!!");
+        {% endif %}
+
+        {% if success %}
+        swal({
+            title: "Published",
+            text: "The notice has been published!",
+            icon: "success",
+            button: "Ok",
+        })
+            .then((click) => {
+                window.location.href = "/admindashboard/notices";
+            });
+        {% endif %}
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,185 @@
+{% extends 'basic.html' %}
+{% block title %}
+Registration Form
+{% endblock %}
+
+{% block css%}
+<style>
+    .section {
+        min-height: 59vh;
+    }
+
+    .box {
+        background-color: #fff;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        border-radius: 12px;
+    }
+
+    .input {
+        background: transparent;
+        border-color: transparent;
+        border-bottom: 2px solid #ccc;
+        border-radius: 0;
+        transition: all .7s;
+    }
+
+    .input:focus {
+        background: transparent;
+        border-color: transparent;
+        box-shadow: none;
+        color: #000;
+        border-bottom: 2px solid #fd2f0a;
+    }
+
+    .label {
+        color: #575757;
+        display: block;
+        font-size: 16px;
+    }
+
+    .buttons {
+        width: 120px;
+        height: 50px;
+        border: none;
+        font-size: 13px;
+        letter-spacing: 1px;
+        background: #fd2f0a;
+        opacity: .5;
+        transition: all .5s;
+    }
+
+    .buttons2 {
+        width: 120px;
+        height: 50px;
+        border: none;
+        font-size: 13px;
+        letter-spacing: 1px;
+        background: #fd2f0a;
+        cursor: pointer;
+        opacity: .8;
+        transition: all .5s;
+    }
+
+    .btn-danger:hover {
+        transform: translateY(-3px);
+        opacity: 1;
+        background: #fd2f0a;
+    }
+</style>
+{% endblock%}
+
+{% load static %}
+{% block body %}
+<section class="bg-light section p-4">
+    <div class="container-fluid">
+        <h2 class="text-center">Registration Form</h2>
+        <div class="underline m-auto">
+
+        </div>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="box p-5 m-5">
+                <div class="row">
+                    <div class="form-group col-4">
+                        <label for="name" class="label">Name</label>
+                        <input name="name" type="text" class="form-control input" id="name" required>
+                    </div>
+                    <div class="form-group col-4">
+                        <label for="father_name" class="label">Father's Name</label>
+                        <input name="f_name" type="text" class="form-control input" id="father_name" required>
+                    </div>
+                    <div class="form-group col-4">
+                        <label for="mother_name" class="label">Mother's Name</label>
+                        <input name="m_name" type="text" class="form-control input" id="mother_name" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-4">
+                        <label for="email" class="label">E-mail Id</label>
+                        <input name="email" type="email" class="form-control input" id="email" readonly required>
+                    </div>
+                    <div class="form-group col-4">
+                        <label for="gender">Gender</label>
+                        <select name="gender" class="custom-select input" id="gender" required>
+                            <option selected>Choose one...</option>
+                            <option value="1">Male</option>
+                            <option value="2">Female</option>
+                            <option value="3">Others</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-4">
+                        <label for="phone_number" class="label">Phone Number</label>
+                        <input name="number" type="number" class="form-control input" id="phone_number" required
+                            maxlength="10">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-8">
+                        <label for="address" class="label">Address</label>
+                        <input name="address" type="text" class="form-control input" id="address" required>
+                    </div>
+                    <div class="form-group col-4">
+                        <label for="zip" class="label">Pin Code</label>
+                        <input name="pin" type="number" class="form-control input" id="zip" required maxlength="6">
+                    </div>
+                </div>
+            </div>
+            <div class="text-center custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="toggle">
+                <label class="custom-control-label" for="toggle">I agree that all the particulars stated by me in this
+                    application form are true and correct.</label>
+            </div>
+            <div class="text-center my-4">
+                <button id="submit" type="submit"
+                    class="buttons btn text-uppercase text-center text-white font-weight-bold p-3">
+                    Submit</button>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}
+
+{% block js %}
+<script>
+
+    $(document).ready(function () {
+        if (document.URL == 'http://127.0.0.1:8000/registration/' + '{{ email }}') {
+            $(".registration").addClass("nav-active");
+            $('#email').val('{{ email }}')
+        }
+        if (document.URL == 'http://127.0.0.1:8000/registration/null') {
+            $(".registration").addClass("nav-active");
+            $('#email').val("");
+            $('#email').removeAttr('readonly');
+
+        }
+
+        $('#submit').attr('disabled', true);
+        $('#toggle').click(function () {
+            if ($(this).is(':checked')) {
+                $('#submit').removeAttr('disabled');
+                $('#submit').removeClass('buttons');
+                $('#submit').addClass('buttons2');
+                $('#submit').addClass('btn-danger');
+            } else {
+                $('#submit').attr('disabled', true);
+                $('#submit').addClass('buttons');
+                $('#submit').removeClass('buttons2');
+                $('#submit').removeClass('btn-danger');
+            }
+        });
+        {% if error %}
+        alert("Fields cann't be empty!!!");
+        {% endif %}
+        {% if error_phone %}
+        // alert("Phone number should be of 10 digits!!!");
+        swal("Error!", "Phone number should be of 10 digits!!!", "error");
+        {% endif %}
+        {% if error_pin %}
+        // alert("Pincode number should be of 6 digits!!!");
+        swal("Error!", "Pincode number should be of 6 digits!!!", "error");
+        {% endif %}
+
+    });
+</script>
+{% endblock %}

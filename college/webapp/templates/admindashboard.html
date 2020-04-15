@@ -1,0 +1,125 @@
+{% extends 'basic.html' %}
+{% block title %}
+Admin Dashboard
+{% endblock %}
+{% block css %}
+<style>
+    .section {
+        min-height: 45vh;
+    }
+
+    .buttons {
+        width: 170px;
+        height: 45px;
+        font-size: 13px;
+        letter-spacing: 1px;
+        background: #fd2f0a;
+        cursor: pointer;
+        box-shadow: 3px 4px 10px 0px rgba(0, 0, 0, 0.2);
+        opacity: 0.8;
+        transition: all 0.5s;
+    }
+
+    .btn-danger:hover {
+        width: 185px;
+        border: none;
+        letter-spacing: 1.2px;
+        transform: translateY(-3px);
+        /* box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4); */
+        box-shadow: 5px 5px 12px rgb(199, 199, 199, 0.8);
+        opacity: 1;
+        background: #fd2f0a;
+    }
+
+    .hr {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        border: 0;
+        border-top: 1px solid #fd2f0a;
+    }
+</style>
+{% endblock %}
+
+{% load static %}
+{% block body %}
+
+<section class="section bg-light p-4">
+    <h3 class="text-center">Admin Dashboard</h3>
+    <div class="underline m-auto">
+
+    </div>
+
+    <div class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-md-12 my-4 teacher-box px-5 pt-5 pb-3">
+                <div class="row">
+                    <div class="col-2 pl-3 pt-2">
+                        <i class="fas fa-user-graduate fa-3x mt-3 primary-color"></i>
+                    </div>
+                    <div class="col-10">
+                        <h4 class="text-uppercase primary-color font-weight-bold department-names">Students</h4>
+                        <hr class="hr">
+                        <p>Total registration : <span
+                                class="primary-color font-weight-bold">{{registration_number}}</span></p>
+                        <p>Manage all the student's info here...</p>
+                        <div class="my-4">
+                            <button onclick="window.location.href = 'students';"
+                                class="buttons btn btn-danger text-uppercase text-center text-white font-weight-bold">
+                                Visit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8 col-md-12 my-4 teacher-box px-5 pt-5 pb-3">
+                <div class="row">
+                    <div class="col-2 pl-3 pt-2">
+                        <i class="fas fa-clipboard-list fa-3x mt-3 primary-color"></i>
+                    </div>
+                    <div class="col-10">
+                        <h4 class="text-uppercase primary-color font-weight-bold department-names">Notices</h4>
+                        <hr class="hr">
+                        <p>Total notices : <span class="primary-color font-weight-bold">{{notice_number}}</span></p>
+                        <p>Manage all the notices here...</p>
+                        <div class="my-4">
+                            <button onclick="window.location.href = 'notices';"
+                                class="buttons btn btn-danger text-uppercase text-center text-white font-weight-bold">
+                                Visit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8 col-md-12 my-4 teacher-box px-5 pt-5 pb-3">
+                <div class="row">
+                    <div class="col-2 pl-3 pt-2">
+                        <i class="fas fa-comment-alt fa-3x mt-3 primary-color"></i>
+                    </div>
+                    <div class="col-10">
+                        <h4 class="text-uppercase primary-color font-weight-bold department-names">Feedbacks</h4>
+                        <hr class="hr">
+                        <p>Total feedbacks : <span class="primary-color font-weight-bold">{{feedback_number}}</span></p>
+                        <p>Manage all the feedbacks here...</p>
+                        <div class="my-4">
+                            <button onclick="window.location.href = 'feedbacks';"
+                                class="buttons btn btn-danger text-uppercase text-center text-white font-weight-bold">
+                                Visit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="my-4 text-center">
+            <button onclick="window.location.href = '/';"
+                class="buttons btn btn-danger text-uppercase text-center text-white font-weight-bold">
+                Log Out<i class="fas fa-sign-out-alt text-white mx-1"></i></button>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block js %}
+<script>
+    $(document).ready(function () {
+
+    });
+</script>
+{% endblock %}

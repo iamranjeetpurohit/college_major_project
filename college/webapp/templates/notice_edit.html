@@ -1,0 +1,121 @@
+{% extends 'basic.html' %}
+{% block title %}
+Admin Dashboard Notice Edit
+{% endblock %}
+
+{% block css%}
+<style>
+    .section {
+        min-height: 45vh;
+    }
+
+    .box {
+        background-color: #fff;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        border-radius: 12px;
+    }
+
+    .label {
+        color: #575757;
+        display: block;
+        font-size: 16px;
+    }
+
+    .input {
+        background: transparent;
+        border-color: transparent;
+        border-bottom: 2px solid #ccc;
+        border-radius: 0;
+        transition: all .7s;
+    }
+
+    .input:focus {
+        background: transparent;
+        border-color: transparent;
+        box-shadow: none;
+        color: #000;
+        border-bottom: 2px solid #fd2f0a;
+    }
+
+    .buttons {
+        width: 110px;
+        height: 50px;
+        border: none;
+        font-size: 13px;
+        letter-spacing: 1px;
+        background: #fd2f0a;
+        cursor: pointer;
+        opacity: .8;
+        transition: all .5s;
+    }
+
+    .btn-danger:hover {
+        transform: translateY(-3px);
+        opacity: 1;
+        background: #fd2f0a;
+    }
+
+    .col-centered {
+        margin: 0 auto;
+        float: none;
+    }
+</style>
+{% endblock %}
+
+{% load static %}
+{% block body %}
+<section class="bg-light p-4 section">
+    <div class="container">
+        <h2 class="text-center">Edit Notice Here</h2>
+        <div class="underline m-auto">
+
+        </div>
+
+        <form method="POST">
+            {% csrf_token %}
+            <div class="box p-5 m-5">
+                <div class="row justify-content-center my-2">
+                    <div class="form-group col-7">
+                        <label class="label">Edit Notice</label>
+                        <input id="notice" name="notice" type="text" class="form-control input">
+                    </div>
+                </div>
+                <div class="text-center my-3">
+                    <button name="update"
+                        class="buttons btn btn-danger text-uppercase text-center text-white font-weight-bold p-3 mx-2 decline">Update</button>
+                    <button name="delete"
+                        class="buttons btn btn-danger text-uppercase text-center text-white font-weight-bold p-3 mx-2 decline">Delete</button>
+                </div>
+            </div>
+
+            <!--          
+        <div class="row m-3">
+            <div class="col-lg-4 col-lg-offset-4 col-centered">
+                <div class="input-group mx-sm-3 mb-2">
+                    <input name="notice" type="text" class="form-control input ml-5" placeholder="Edit notice">
+                </div>
+            </div>
+        </div>
+        <button name="update"
+            class="buttons btn btn-danger text-uppercase text-center text-white font-weight-bold p-3 mx-2 decline">Update</button>
+        <button name="delete"
+            class="buttons btn btn-danger text-uppercase text-center text-white font-weight-bold p-3 mx-2 decline">Delete</button>-->
+        </form>
+    </div>
+
+</section>
+
+{% endblock %}
+
+{% block js %}
+<script>
+    $(document).ready(function () {
+        $('#notice').val('{{ details.notice }}');
+
+        {% if error %}
+        // alert("Field cann't be empty!!!");
+        swal("Error!", "Fields cann't be empty!!!", "error");
+        {% endif %}
+    });
+</script>
+{% endblock %}

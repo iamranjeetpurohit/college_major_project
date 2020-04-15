@@ -1,0 +1,208 @@
+{% extends 'basic.html' %}
+{% block title %}
+Sign in
+{% endblock %}
+
+{% block css%}
+<style>
+    .section {
+        min-height: 47vh;
+    }
+
+    .register-left p {
+        padding: 20px 20px 0;
+    }
+
+    .register-right {
+        border: 1px solid #fd2f0a;
+        background: #fff;
+        border-radius: 4%;
+        padding: 50px;
+    }
+
+    .register-form {
+        padding: 30px;
+    }
+
+    .input {
+        background: transparent;
+        border-color: transparent;
+        border-bottom: 2px solid #ccc;
+        border-radius: 0;
+        transition: all .7s;
+    }
+
+    .input:focus {
+        background: transparent;
+        border-color: transparent;
+        box-shadow: none;
+        color: #000;
+        border-bottom: 2px solid #fd2f0a;
+    }
+
+    .label {
+        color: #575757;
+        display: block;
+        font-size: 16px;
+    }
+
+    .checkbox-label {
+        font-size: 14px;
+    }
+
+    .buttons {
+        width: 120px;
+        height: 50px;
+        border: none;
+        font-size: 13px;
+        letter-spacing: 1px;
+        background: #fd2f0a;
+        opacity: .8;
+        transition: all .5s;
+    }
+
+    .buttons2 {
+        width: 120px;
+        height: 50px;
+        border: none;
+        font-size: 13px;
+        letter-spacing: 1px;
+        background: #fd2f0a;
+        cursor: pointer;
+        opacity: .8;
+        transition: all .5s;
+    }
+
+    .btn-danger:hover {
+        width: 135px;
+        letter-spacing: 1.2px;
+        transform: translateY(-3px);
+        opacity: 1;
+        background: #fd2f0a;
+    }
+</style>
+{% endblock%}
+
+{% load static %}
+{% block body %}
+<section class="bg-offwhite p-4 section">
+    <div class="row justify-content-center text-center">
+        <div class="col">
+            <ul class="list-inline text-center text-uppercase font-weight-bold my-3">
+                <li class="list-inline-item department-list-item active-item">
+                    Sign up <span class="mx-md-5 mx-3 text-muted">/</span>
+                </li>
+                <li class="list-inline-item department-list-item">
+                    <a class="text-muted" href="/account_log">Log in</a>
+                    <span class="mx-md-5 mx-3 text-muted">/</span>
+                </li>
+                <li class="list-inline-item department-list-item">
+                    <a class="text-muted" href="/account_admin">Admin</a>
+                </li>
+            </ul>
+            <form method="POST">
+                {% csrf_token %}
+                <div class="container m-5 justify-content-center mx-auto">
+                    <div class="row justify-content-center">
+                        <div class="col-md-10">
+                            <div class="row">
+                                <div class="col-md-5 text-center my-auto">
+                                    <h3 class="primary-color">Sign up</h3>
+                                    <p class="text-muted">Doesn't have an account? <br> Create your account here</p>
+                                </div>
+                                <div class="col-md-7 register-right">
+                                    <h3 class="primary-color text-center">Register</h3>
+                                    <form class="contact-form">
+                                        <div class="form-group pt-4 py-2 text-left">
+                                            <label for="email" class="label">Email</label>
+                                            <input name="sign-email" type="email" id="sign-email"
+                                                class="form-control input" name="" required>
+                                        </div>
+                                        <div class="form-group py-2 text-left">
+                                            <label for="password" class="label">Password</label>
+                                            <input name="sign-password" type="password" class="form-control input"
+                                                name="" required>
+                                            <small class="form-text text-muted">*Password should contain atleast 6
+                                                characters</small>
+                                        </div>
+                                        <div class="form-group py-2 pb-5 text-left">
+                                            <label for="confirmpassword" class="label">Confirm Password</label>
+                                            <input name="sign-conpassword" type="password" class="form-control input"
+                                                name="" required>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-6 col-md-12">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" id="toggle">
+                                                    <label class="custom-control-label checkbox-label"
+                                                        for="toggle">Accept
+                                                        terms and
+                                                        conditions.</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-md-12">
+                                                <div
+                                                    class="text-lg-right mt-lg-0 text-md-center mt-md-4 text-center mt-4 mt-4">
+                                                    <button name="sign-submit" id="sign-submit" type="submit"
+                                                        class="buttons btn text-uppercase text-center text-white font-weight-bold p-3">
+                                                        Sign up</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block js %}
+<script>
+    if (document.URL == 'http://127.0.0.1:8000/account_sign/') {
+        $(".log").addClass("nav-active");
+    }
+
+    $(document).ready(function () {
+
+        {% if error %}
+        alert("Fields cann't be empty!!!");
+        {% endif %}
+
+        {% if error_match %}
+        // alert("Password doesnot match!!!");
+        swal("Error!", "Password doesn't match!!!", "error");
+        {% endif %}
+
+        {% if error_exist %}
+        // alert("This email has already existed !!!");
+        swal("Error!", "This email has already existed !!!", "error");
+        {% endif %}
+
+        {% if error_length %}
+        // alert("Password should contain atleast 6 characters !!!");
+        swal("Error!", "Password should contain atleast 6 characters !!!", "error");
+        {% endif %}
+
+        $('#sign-submit').attr('disabled', true);
+        $('#toggle').click(function () {
+            if ($(this).is(':checked')) {
+                $('#sign-submit').removeAttr('disabled');
+                $('#sign-submit').removeClass('buttons');
+                $('#sign-submit').addClass('buttons2');
+                $('#sign-submit').addClass('btn-danger');
+            } else {
+                $('#sign-submit').attr('disabled', true);
+                $('#sign-submit').addClass('buttons');
+                $('#sign-submit').removeClass('buttons2');
+                $('#sign-submit').removeClass('btn-danger');
+            }
+        });
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,99 @@
+{% extends 'basic.html' %}
+
+{% block title %}
+Notice
+{% endblock %}
+
+{% block css %}
+<style>
+    .section {
+        min-height: 45vh;
+    }
+
+    .notice-box {
+        padding: 35px;
+        background-color: #fff;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        border-radius: 10px;
+    }
+
+    .buttons {
+        width: 120px;
+        height: 50px;
+        border: none;
+        font-size: 13px;
+        letter-spacing: 1px;
+        background: #fd2f0a;
+        opacity: .8;
+        transition: all .5s;
+    }
+
+    .btn-danger:hover {
+        width: 135px;
+        letter-spacing: 1.2px;
+        transform: translateY(-3px);
+        opacity: 1;
+        background: #fd2f0a;
+    }
+
+    .notice-font {
+        font-size: 17px;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+{% load static %}
+<section class="bg-light section p-4">
+    <h2 class="text-center">JIST Notice Board</h2>
+    <div class="underline m-auto">
+
+    </div>
+    {% if noDetails %}
+    <div class="container my-4">
+        <div class="notice-box p-5 m-4 text-center">
+            <p class="lead">No notices are available.</p>
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="container">
+        {% for i in notice reversed %}
+        <div class="notice-box m-4">
+            <div class="d-flex justify-content-between">
+                <h5 class="font-weight-bold">Notice : {{forloop.counter}}</h5>
+                <h5 class="notice-font">{{i.date}}</h5>
+            </div>
+            <hr>
+            <p class="text-dark notice-font text-justify">{{i.notice}}</p>
+            {% if i.images %}
+            <div class="my-4">
+                <a href="/media/{{i.images}}" target="_blank">
+                    <img class="img-fluid" src="/media/{{i.images}}" onerror="this.style.display='none'">
+                </a>
+            </div>
+            {% endif %}
+            {% if i.pdf %}
+            <div class="text-center my-1">
+                <h6 class="text-dark font-weight-bold">Open related document</h6>
+                <button onclick="window.open('/media/{{i.pdf}}','_blank')" ;
+                    class="buttons btn btn-danger text-uppercase text-center text-white font-weight-bold mt-2">
+                    Open</button>
+            </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+{% endblock %}
+
+{% block js %}
+<script>
+    if (document.URL == 'http://127.0.0.1:8000/notice/') {
+        $(".notice").addClass("nav-active");
+    }
+
+
+</script>
+{% endblock %}
